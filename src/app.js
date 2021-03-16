@@ -1,4 +1,3 @@
-require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
@@ -24,9 +23,9 @@ app.use('/favicon.ico', (req, res) => res.sendStatus(StatusCodes.NO_CONTENT));
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 // Routers
-const countryRouter = require('./modules/countries/country.router');
-
-app.use('/countries', countryRouter);
+app.use('/countries', require('./modules/countries/country.router'));
+app.use('/users', require('./modules/users/user.route'))
+app.use('/auth', require('./modules/users/auth.route'))
 
 app.use((req, res) => {
   res.status(StatusCodes.NOT_IMPLEMENTED).send(ReasonPhrases.NOT_IMPLEMENTED);
